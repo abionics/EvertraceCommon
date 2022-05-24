@@ -1,0 +1,1 @@
+AbiDict = dict[str, str]
