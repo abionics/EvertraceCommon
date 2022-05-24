@@ -4,7 +4,7 @@ from pydantic.dataclasses import dataclass
 from tvmbase.client import Client
 from tvmbase.models.tvm.message import Message
 
-from evertrace_common.decoder.response.direction import Direction
+from common.decoder.response.direction import Direction
 
 
 @dataclass(frozen=True)

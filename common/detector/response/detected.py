@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 
-from evertrace_common.constants import UNKNOWN_ACCOUNT_NAME
-from evertrace_common.detector.response.feature import Feature
+from common.constants import UNKNOWN_ACCOUNT_NAME
+from common.detector.response.feature import Feature
 
 
 @dataclass(frozen=True, slots=True)
