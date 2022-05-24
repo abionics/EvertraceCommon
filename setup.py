@@ -2,7 +2,7 @@ import re
 
 from setuptools import setup, find_packages
 
-NAME = 'evertrace-common'
+NAME = 'common'
 URL = f'https://github.com/abionics/EvertraceCommon'
 
 
