@@ -1,3 +1,4 @@
+from loguru import logger
 from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -15,8 +16,12 @@ class Database:
 
     def init_services(self):
         for name in SERVICES:
-            service = Service(name=name)
-            self.session.merge(service)
+            instance = self.session.query(Service).filter_by(name=name).first()
+            if instance is None:
+                service = Service(name=name)
+                self.session.add(service)
+                logger.success(f'Created service "{name}"')
+        self.commit()
 
     def save_query(self, query: Query):
         self.session.add(query)
@@ -25,7 +30,8 @@ class Database:
     def commit(self):
         try:
             self.session.commit()
-        except IntegrityError:
+        except IntegrityError as e:
+            logger.warning(f'Database exception {e}, trying to rollback')
             self.session.rollback()
         except Exception as e:
             self.session.rollback()
