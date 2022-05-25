@@ -42,9 +42,11 @@ setup(
     packages=find_packages(exclude=['tests', 'examples']),
     install_requires=[
         'tvmbase>=2.0.0',
-        'pydantic>=1.9.1'
-        'sqlalchemy>=1.4.36',
         'loguru>=0.6.0',
+        'sqlalchemy>=1.4.36',
+        'psycopg2-binary>=2.9.3',
+        'fastapi>=0.78.0',
+        'pydantic>=1.9.1',
     ],
     zip_safe=False,
 )
