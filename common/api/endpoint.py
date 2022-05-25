@@ -26,11 +26,19 @@ def endpoint(service_id: int, version: str, db_url: str):
                 query.exception = True
                 query.exception_reason = reason
                 response = create_response(version, exception=True, reason=reason)
-            finish_time = time.time()
             query.response = response
+            finish_time = time.time()
             query.duration = finish_time - start_time
+
             db = Database(db_url)
             db.save_query(query)
+            if query.exception_reason:
+                exception_log = f'with exception {query.exception_reason}'
+                logger_method = logger.warning
+            else:
+                exception_log = 'OK'
+                logger_method = logger.success
+            logger_method(f'Query processed in {round(query.duration, 2)}s {exception_log}: {ip=}, {query.method=}')
             return response
 
         wrapped.__signature__ = inspect.signature(function)
