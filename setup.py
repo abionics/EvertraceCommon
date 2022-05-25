@@ -43,6 +43,8 @@ setup(
     install_requires=[
         'tvmbase>=2.0.0',
         'pydantic>=1.9.1'
+        'sqlalchemy>=1.4.36',
+        'loguru>=0.6.0',
     ],
     zip_safe=False,
 )

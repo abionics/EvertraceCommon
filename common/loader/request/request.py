@@ -1,7 +1,7 @@
 from abc import ABC
 from enum import Enum
 
-from pydantic.dataclasses import dataclass
+from pydantic import BaseModel
 from tonclient.types import SortDirection
 
 
@@ -10,19 +10,16 @@ class ExtractorClass(str, Enum):
     EXTENDED = 'extended'
 
 
-@dataclass(frozen=True)
-class LoadBaseParam(ABC):
+class LoadBaseParam(ABC, BaseModel):
     net: str
     extractor_class: ExtractorClass
 
 
-@dataclass(frozen=True)
 class LoadGraphParam(LoadBaseParam):
     idx: str
     target: str | None
 
 
-@dataclass(frozen=True)
 class LoadAccountParam(LoadBaseParam):
     target: str
     from_time: int
@@ -30,7 +27,6 @@ class LoadAccountParam(LoadBaseParam):
     sort_direction: SortDirection
 
 
-@dataclass(frozen=True)
-class LoadPreparedParam(LoadBaseParam):
+class LoadPureParam(LoadBaseParam):
     messages: list[str]
     transactions: list[str]

@@ -1,12 +1,11 @@
 from abc import ABC, abstractmethod
 
-from pydantic.dataclasses import dataclass
+from pydantic import BaseModel
 from tvmbase.client import Client
 from tvmbase.models.tvm.account import Account
 
 
-@dataclass(frozen=True)
-class DetectBaseParam(ABC):
+class DetectBaseParam(ABC, BaseModel):
     net: str
     with_abi: bool
 
@@ -15,7 +14,6 @@ class DetectBaseParam(ABC):
         pass
 
 
-@dataclass(frozen=True)
 class DetectBocParam(DetectBaseParam):
     boc: str
 
@@ -23,7 +21,6 @@ class DetectBocParam(DetectBaseParam):
         return await Account.from_boc(client, self.boc)
 
 
-@dataclass(frozen=True)
 class DetectAddressParam(DetectBaseParam):
     address: str
 

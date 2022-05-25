@@ -1,14 +1,13 @@
 from abc import ABC, abstractmethod
 
-from pydantic.dataclasses import dataclass
+from pydantic import BaseModel
 from tvmbase.client import Client
 from tvmbase.models.tvm.message import Message
 
 from common.decoder.response.direction import Direction
 
 
-@dataclass(frozen=True)
-class DecodeBaseParam(ABC):
+class DecodeBaseParam(ABC, BaseModel):
     net: str
 
     @abstractmethod
@@ -21,7 +20,6 @@ class DecodeBaseParam(ABC):
         return message.idx, message.data.body, direction
 
 
-@dataclass(frozen=True)
 class DecodeBocParam(DecodeBaseParam):
     boc: str
 
@@ -30,7 +28,6 @@ class DecodeBocParam(DecodeBaseParam):
         return self.convert_message(message)
 
 
-@dataclass(frozen=True)
 class DecodeIdxParam(DecodeBaseParam):
     idx: str
 
@@ -39,7 +36,6 @@ class DecodeIdxParam(DecodeBaseParam):
         return self.convert_message(message)
 
 
-@dataclass(frozen=True)
 class DecodePureParam(DecodeBaseParam):
     body: str
     direction: Direction = Direction.Internal
