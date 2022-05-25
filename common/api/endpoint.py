@@ -15,8 +15,7 @@ def endpoint(service_id: int, version: str, db_url: str):
         async def wrapped(_: Request, **kwargs) -> dict:
             start_time = time.time()
             ip = _.client.host
-            method = inspect.stack()[1].function
-            query = Query(ip=ip, method=method, request=_to_dict(kwargs), service_id=service_id)
+            query = Query(ip=ip, method=function.__name__, request=_to_dict(kwargs), service_id=service_id)
             try:
                 result = await function(_, **kwargs)
                 query.exception = False
