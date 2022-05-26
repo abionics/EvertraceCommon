@@ -37,7 +37,7 @@ class Query(Base):
     request = Column(JSONB, nullable=False)
     response = Column(JSONB, nullable=False)
     exception = Column(Boolean, nullable=False)
-    exception_reason = Column(String)
+    traceback = Column(String)
     duration = Column(Float, nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     service_id = Column(Integer, ForeignKey('service.id'), nullable=False, index=True)

@@ -1,5 +1,6 @@
 import inspect
 import time
+import traceback
 from typing import Callable
 
 from fastapi import Request
@@ -20,24 +21,21 @@ def endpoint(service_id: int, version: str, db_url: str):
                 result = await function(_, **kwargs)
                 query.exception = False
                 response = create_response(version, exception=False, result=result)
+                exception_log = 'OK'
             except Exception as e:
                 logger.exception(e)
-                reason = str(e)
                 query.exception = True
-                query.exception_reason = reason
+                query.traceback = traceback.format_exc()
+                reason = str(e)
                 response = create_response(version, exception=True, reason=reason)
+                exception_log = f'with exception {reason}'
             query.response = response
             finish_time = time.time()
             query.duration = finish_time - start_time
 
             db = Database(db_url)
             db.save_query(query)
-            if query.exception_reason:
-                exception_log = f'with exception {query.exception_reason}'
-                logger_method = logger.warning
-            else:
-                exception_log = 'OK'
-                logger_method = logger.success
+            logger_method = logger.warning if query.exception else logger.success
             logger_method(f'Query processed in {round(query.duration, 2)}s {exception_log}: {ip=}, {query.method=}')
             return response
 
