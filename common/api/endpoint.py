@@ -40,6 +40,7 @@ def endpoint(service_id: int, version: str, db_url: str):
             return response
 
         wrapped.__signature__ = inspect.signature(function)
+        wrapped.__name__ = function.__name__
         return wrapped
 
     return wrapper
