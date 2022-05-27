@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from common.constants import UNKNOWN_FUNCTION_NAME
+from common.constants import UNKNOWN_FUNCTION_NAME, UNKNOWN_ACCOUNT_NAME
 from common.decoder.response.direction import Direction
 from common.decoder.response.feature import Feature
 
@@ -9,7 +9,7 @@ from common.decoder.response.feature import Feature
 class Decoded:
     method: str
     data: dict | None
-    contract_name: str | None
+    contract_name: str
     direction: Direction
     signature: bool
     headers: dict | None
@@ -20,7 +20,7 @@ class Decoded:
         return cls(
             UNKNOWN_FUNCTION_NAME,
             data=None,
-            contract_name=None,
+            contract_name=UNKNOWN_ACCOUNT_NAME,
             direction=direction,
             signature=False,
             headers=None,
