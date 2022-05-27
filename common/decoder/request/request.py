@@ -37,8 +37,9 @@ class DecodeIdxParam(DecodeBaseParam):
 
 
 class DecodePureParam(DecodeBaseParam):
+    idx: str
     body: str
     direction: Direction = Direction.Internal
 
     async def convert(self, _: Client) -> (str, str, Direction):
-        return None, self.body, self.direction
+        return self.idx, self.body, self.direction
