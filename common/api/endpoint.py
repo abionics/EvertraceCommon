@@ -1,7 +1,7 @@
 import inspect
 import time
 import traceback
-from typing import Callable
+from typing import Callable, Any
 
 from fastapi import Request
 from loguru import logger
@@ -9,6 +9,7 @@ from pydantic import BaseModel
 
 from common.db.database import Database
 from common.db.models import Query
+from common.utils.recursive_convert import recursive_convert
 
 
 def endpoint(service_id: int, version: str, db_url: str):
@@ -16,7 +17,8 @@ def endpoint(service_id: int, version: str, db_url: str):
         async def wrapped(_: Request, **kwargs) -> dict:
             start_time = time.time()
             ip = _.client.host
-            query = Query(ip=ip, method=function.__name__, request=_to_dict(kwargs), service_id=service_id)
+            request_dict = recursive_convert(kwargs, rule=_convert_rule)
+            query = Query(ip=ip, method=function.__name__, request=request_dict, service_id=service_id)
             try:
                 result = await function(_, **kwargs)
                 query.exception = False
@@ -46,13 +48,10 @@ def endpoint(service_id: int, version: str, db_url: str):
     return wrapper
 
 
-def _to_dict(data: dict) -> dict:
-    result = dict()
-    for key, value in data.items():
-        if isinstance(value, BaseModel):
-            value = value.dict()
-        result[key] = value
-    return result
+def _convert_rule(value: Any) -> Any:
+    if isinstance(value, BaseModel):
+        return value.dict()
+    return value
 
 
 def create_response(version: str, exception: bool, **kwargs) -> dict:

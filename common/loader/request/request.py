@@ -14,6 +14,9 @@ class LoadBaseParam(ABC, BaseModel):
     net: str
     extractor_class: ExtractorClass
 
+    class Config:
+        use_enum_values = True
+
 
 class LoadGraphParam(LoadBaseParam):
     idx: str
