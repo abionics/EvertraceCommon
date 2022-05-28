@@ -52,7 +52,6 @@ def endpoint(service_id: int, version: str, db_url: str):
         parameters = list(signature.parameters.values())
         kind = inspect.Parameter.POSITIONAL_OR_KEYWORD
         parameters.insert(0, inspect.Parameter('request', kind=kind, annotation=Request))
-        parameters.insert(1, inspect.Parameter('options', kind=kind, annotation=OptionsParam))
 
         signature = inspect.Signature(parameters, return_annotation=signature.return_annotation)
         wrapped.__signature__ = signature
