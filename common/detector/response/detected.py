@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+from tonclient.types import AbiContract
+
 from common.constants import UNKNOWN_ACCOUNT_NAME
 from common.detector.response.feature import Feature
 
@@ -13,7 +15,9 @@ class Detected:
     feature: Feature
 
     @classmethod
-    def from_casual(cls, name: str, abi: dict | None, feature: Feature):
+    def from_casual(cls, name: str, abi: AbiContract | None, feature: Feature):
+        if abi is not None:
+            abi = abi.dict
         return cls(name, abi, deep_name=[name], deep_properties=None, feature=feature)
 
     @classmethod
