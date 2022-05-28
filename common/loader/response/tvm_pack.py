@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from typing import Type
 
-from tvmbase.models.tvm import TvmType
 from tvmbase.models.tvm.account import Account
 from tvmbase.models.tvm.base import BaseTvm
 from tvmbase.models.tvm.message import Message
 from tvmbase.models.tvm.transaction import Transaction
+from tvmbase.types import TvmType
 
 
 @dataclass(frozen=True, slots=True)

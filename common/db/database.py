@@ -3,7 +3,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from common.constants import SERVICES
 from common.db.models import Base, Service, Query
 
 
@@ -14,13 +13,12 @@ class Database:
         Base.metadata.create_all(self.engine)
         self.session = Session(bind=self.engine)
 
-    def init_services(self):
-        for name in SERVICES:
-            instance = self.session.query(Service).filter_by(name=name).first()
-            if instance is None:
-                service = Service(name=name)
-                self.session.add(service)
-                logger.success(f'Created service "{name}"')
+    def init_service(self, name: str):
+        instance = self.session.query(Service).filter_by(name=name).first()
+        if instance is None:
+            service = Service(name=name)
+            self.session.add(service)
+            logger.success(f'Created service "{name}"')
         self.commit()
 
     def save_query(self, query: Query):
