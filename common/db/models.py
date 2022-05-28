@@ -32,6 +32,7 @@ class Service(Base):
 class Query(Base):
     __tablename__ = 'query'
     id = Column(Integer, primary_key=True)
+    identifier = Column(String(32))
     ip = Column(CIDR)
     method = Column(String, nullable=False)
     request = Column(JSONB, nullable=False)

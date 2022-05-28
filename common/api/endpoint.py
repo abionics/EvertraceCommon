@@ -17,10 +17,15 @@ def endpoint(service_id: int, version: str, db_url: str):
     def wrapper(function: Callable):
         async def wrapped(request: Request, options: OptionsParam, **kwargs) -> dict:
             start_time = time.time()
-            ip = request.client.host
             request_params = options.dict() | kwargs
             request_dict = recursive_convert(request_params, rule=_convert_rule)
-            query = Query(ip=ip, method=function.__name__, request=request_dict, service_id=service_id)
+            query = Query(
+                ip=request.client.host,
+                identifier=options.identifier,
+                method=function.__name__,
+                request=request_dict,
+                service_id=service_id,
+            )
             try:
                 result = await function(options=options, **kwargs)
                 query.exception = False

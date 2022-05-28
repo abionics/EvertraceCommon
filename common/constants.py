@@ -1,3 +1,5 @@
+IDENTIFIER_PREFIX = 'evertrace'
+
 # decoder
 UNKNOWN_FUNCTION_NAME = '<unknown>'
 BOUNCED_FUNCTION_NAME = '<bounced>'
