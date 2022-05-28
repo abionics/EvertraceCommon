@@ -13,13 +13,14 @@ class Database:
         Base.metadata.create_all(self.engine)
         self.session = Session(bind=self.engine)
 
-    def init_service(self, name: str):
+    def init_service(self, name: str) -> int:
         instance = self.session.query(Service).filter_by(name=name).first()
         if instance is None:
-            service = Service(name=name)
-            self.session.add(service)
+            instance = Service(name=name)
+            self.session.add(instance)
             logger.success(f'Created service "{name}"')
         self.commit()
+        return instance.id
 
     def save_query(self, query: Query):
         self.session.add(query)
