@@ -7,6 +7,7 @@ from fastapi import Request
 from loguru import logger
 from pydantic import BaseModel
 
+from common.api.options_param import OptionsParam
 from common.db.database import Database
 from common.db.models import Query
 from common.utils.recursive_convert import recursive_convert
@@ -14,13 +15,14 @@ from common.utils.recursive_convert import recursive_convert
 
 def endpoint(service_id: int, version: str, db_url: str):
     def wrapper(function: Callable):
-        async def wrapped(_: Request, **kwargs) -> dict:
+        async def wrapped(request: Request, options: OptionsParam, **kwargs) -> dict:
             start_time = time.time()
-            ip = _.client.host
-            request_dict = recursive_convert(kwargs, rule=_convert_rule)
+            ip = request.client.host
+            request_params = options.dict() | kwargs
+            request_dict = recursive_convert(request_params, rule=_convert_rule)
             query = Query(ip=ip, method=function.__name__, request=request_dict, service_id=service_id)
             try:
-                result = await function(_, **kwargs)
+                result = await function(options=options, **kwargs)
                 query.exception = False
                 response = create_response(version, exception=False, result=result)
                 exception_log = 'OK'
@@ -41,7 +43,14 @@ def endpoint(service_id: int, version: str, db_url: str):
             logger_method(f'Query processed in {round(query.duration, 2)}s {exception_log}: {ip=}, {query.method=}')
             return response
 
-        wrapped.__signature__ = inspect.signature(function)
+        signature = inspect.signature(function)
+        parameters = list(signature.parameters.values())
+        kind = inspect.Parameter.POSITIONAL_OR_KEYWORD
+        parameters.insert(0, inspect.Parameter('request', kind=kind, annotation=Request))
+        parameters.insert(1, inspect.Parameter('options', kind=kind, annotation=OptionsParam))
+
+        signature = inspect.Signature(parameters, return_annotation=signature.return_annotation)
+        wrapped.__signature__ = signature
         wrapped.__name__ = function.__name__
         return wrapped
 

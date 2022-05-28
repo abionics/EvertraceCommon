@@ -8,7 +8,7 @@ from tvmbase.models.tvm.transaction import Transaction
 from tvmbase.types import TvmType
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(slots=True)
 class TvmPack:
     messages: dict[str, Message]
     transactions: dict[str, Transaction]

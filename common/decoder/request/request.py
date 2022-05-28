@@ -8,8 +8,6 @@ from common.decoder.response.direction import Direction
 
 
 class DecodeBaseParam(ABC, BaseModel):
-    net: str
-
     @abstractmethod
     async def convert(self, client: Client) -> (str, str, Direction):
         pass

@@ -11,19 +11,18 @@ class ExtractorClass(str, Enum):
 
 
 class LoadBaseParam(ABC, BaseModel):
-    net: str
-    extractor_class: ExtractorClass
+    extractor_class: ExtractorClass = ExtractorClass.TINY
 
 
 class LoadGraphParam(LoadBaseParam):
     idx: str
-    target: str | None
+    target: str | None = None
 
 
 class LoadAccountParam(LoadBaseParam):
     target: str
     from_time: int
-    limit: int
+    limit: int | None
     sort_direction: SortDirection
 
 

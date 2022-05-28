@@ -1,5 +1,7 @@
 # decoder
 UNKNOWN_FUNCTION_NAME = '<unknown>'
+BOUNCED_FUNCTION_NAME = '<bounced>'
+RECEIVE_FUNCTION_NAME = '<receive>'
 
 # detector
 UNKNOWN_ACCOUNT_NAME = '<unknown>'

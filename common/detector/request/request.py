@@ -6,8 +6,7 @@ from tvmbase.models.tvm.account import Account
 
 
 class DetectBaseParam(ABC, BaseModel):
-    net: str
-    with_abi: bool
+    with_abi: bool = False
 
     @abstractmethod
     async def query_account(self, client: Client):
