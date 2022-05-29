@@ -15,15 +15,15 @@ class Detected:
     feature: Feature
 
     @classmethod
-    def from_casual(cls, name: str, abi: AbiContract | None, feature: Feature) -> 'Detected':
+    def from_basic(cls, name: str, abi: AbiContract | None, feature: Feature) -> 'Detected':
         if abi is not None:
             abi = abi.dict
         return cls(name, abi, deep_name=[name], deep_properties=None, feature=feature)
 
     @classmethod
-    def from_name(cls, name: str, feature: Feature) -> 'Detected':
-        return cls.from_casual(name, abi=None, feature=feature)
+    def from_special(cls, name: str):
+        return cls.from_basic(name, abi=None, feature=Feature.SPECIAL)
 
     @classmethod
     def unknown(cls) -> 'Detected':
-        return cls.from_name(UNKNOWN_ACCOUNT_NAME, Feature.UNKNOWN)
+        return cls.from_basic(UNKNOWN_ACCOUNT_NAME, abi=None, feature=Feature.UNKNOWN)

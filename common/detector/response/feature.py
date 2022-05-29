@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class Feature(str, Enum):
-    EMPTY = 'empty'
+    SPECIAL = 'special'
     USER_ABI = 'user_abi'
     ADDRESS = 'address'
     HASH = 'hash'
