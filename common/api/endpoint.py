@@ -18,7 +18,7 @@ def endpoint(service_id: int, version: str, db_url: str):
         async def wrapped(request: Request, options: OptionsParam, **kwargs) -> dict:
             start_time = time.time()
             ip = request.client.host
-            request_params = options.dict() | kwargs
+            request_params = kwargs | {'options': options}
             request_dict = recursive_convert(request_params, rule=_convert_rule)
             query = Query(
                 ip=ip,
