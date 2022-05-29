@@ -17,10 +17,11 @@ def endpoint(service_id: int, version: str, db_url: str):
     def wrapper(function: Callable):
         async def wrapped(request: Request, options: OptionsParam, **kwargs) -> dict:
             start_time = time.time()
+            ip = request.client.host
             request_params = options.dict() | kwargs
             request_dict = recursive_convert(request_params, rule=_convert_rule)
             query = Query(
-                ip=request.client.host,
+                ip=ip,
                 identifier=options.identifier,
                 method=function.__name__,
                 request=request_dict,
@@ -45,7 +46,7 @@ def endpoint(service_id: int, version: str, db_url: str):
             db = Database(db_url)
             db.save_query(query)
             logger_method = logger.warning if query.exception else logger.success
-            logger_method(f'Query processed in {round(query.duration, 2)}s {exception_log}: {ip=}, {query.method=}')
+            logger_method(f'Query processed in {round(query.duration, 2)}s {exception_log}, {query.method=}')
             return response
 
         signature = inspect.signature(function)
