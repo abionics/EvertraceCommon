@@ -10,3 +10,4 @@ class TraceServerParam(BaseModel):
     target: str | None = None
     sort: bool = True
     recognize: bool = True
+    highlight: str | None = None
