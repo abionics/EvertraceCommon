@@ -5,6 +5,21 @@ from sqlalchemy.orm import declarative_base
 Base = declarative_base()
 
 
+class AbiGroup(Base):
+    __tablename__ = 'abi_group'
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+
+
+class Abi(Base):
+    __tablename__ = 'abi'
+    id = Column(Integer, primary_key=True)
+    hash = Column(String(64), nullable=False, index=True, unique=True)
+    content = Column(JSONB, nullable=False)
+    version = Column(String)
+    group_id = Column(Integer, ForeignKey('abi_group.id'), nullable=False)
+
+
 class ContractGroup(Base):
     __tablename__ = 'contract_group'
     id = Column(Integer, primary_key=True)
@@ -20,7 +35,7 @@ class Contract(Base):
     abi_path = Column(String)
     class_name = Column(String)
     class_type = Column(String)
-    contract_group_id = Column(Integer, ForeignKey('contract_group.id'), nullable=False)
+    group_id = Column(Integer, ForeignKey('contract_group.id'), nullable=False)
 
 
 class Service(Base):

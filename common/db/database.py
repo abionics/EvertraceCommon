@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from common.db.models import Base, Service, Query
+from common.db.models import Base, Service
 
 
 class Database:
@@ -22,16 +22,18 @@ class Database:
         self.commit()
         return instance.id
 
-    def save_query(self, query: Query):
-        self.session.add(query)
-        self.commit()
+    def save(self, instance: Base) -> bool:
+        self.session.add(instance)
+        return self.commit()
 
-    def commit(self):
+    def commit(self) -> bool:
         try:
             self.session.commit()
+            return True
         except IntegrityError as e:
             logger.warning(f'Database exception {e}, trying to rollback')
             self.session.rollback()
+            return False
         except Exception as e:
             self.session.rollback()
             raise e
