@@ -14,6 +14,7 @@ class AbiGroup(Base):
 class Abi(Base):
     __tablename__ = 'abi'
     id = Column(Integer, primary_key=True)
+    name = Column(String(64), nullable=False)
     hash = Column(String(64), nullable=False, index=True, unique=True)
     content = Column(JSONB, nullable=False)
     version = Column(String)
