@@ -1,3 +1,5 @@
+from typing import Type
+
 from loguru import logger
 from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError
@@ -14,13 +16,16 @@ class Database:
         self.session = Session(bind=self.engine)
 
     def init_service(self, name: str) -> int:
-        instance = self.session.query(Service).filter_by(name=name).first()
+        service = self.get_or_create(Service, name=name)
+        return service.id
+
+    def get_or_create(self, class_type: Type[Base], **kwargs) -> Base:
+        instance = self.session.query(class_type).filter_by(**kwargs).first()
         if instance is None:
-            instance = Service(name=name)
-            self.session.add(instance)
-            logger.success(f'Created service "{name}"')
-        self.commit()
-        return instance.id
+            instance = class_type(**kwargs)
+            self.save(instance)
+            logger.success(f'Created {class_type.__name__} with data {kwargs}')
+        return instance
 
     def save(self, instance: Base) -> bool:
         self.session.add(instance)

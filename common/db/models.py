@@ -47,7 +47,7 @@ class Service(Base):
 class Query(Base):
     __tablename__ = 'query'
     id = Column(Integer, primary_key=True)
-    identifier = Column(String(64))
+    identifier = Column(String(64), nullable=False)
     ip = Column(CIDR)
     method = Column(String, nullable=False)
     request = Column(JSONB, nullable=False)
