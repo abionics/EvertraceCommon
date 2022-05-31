@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, Boolean, DateTime, ForeignKey, func
 from sqlalchemy.dialects.postgresql import JSONB, CIDR
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
@@ -33,10 +33,11 @@ class Contract(Base):
     name = Column(String, index=True, unique=True)
     hash = Column(String, index=True)
     address = Column(String(66), index=True)
-    abi_path = Column(String)
     class_name = Column(String)
     class_type = Column(String)
+    abi_id = Column(Integer, ForeignKey('abi.id'), nullable=True)
     group_id = Column(Integer, ForeignKey('contract_group.id'), nullable=False)
+    abi = relationship('Abi')
 
 
 class Service(Base):
@@ -57,4 +58,4 @@ class Query(Base):
     traceback = Column(String)
     duration = Column(Float, nullable=False)
     created_at = Column(DateTime, nullable=False, server_default=func.now())
-    service_id = Column(Integer, ForeignKey('service.id'), nullable=False, index=True)
+    service_id = Column(Integer, ForeignKey('service.id'), nullable=False)
