@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
 from common.constants import UNKNOWN_FUNCTION_NAME, RECEIVE_FUNCTION_NAME, BOUNCED_FUNCTION_NAME, UNKNOWN_ACCOUNT_NAME
-from common.decoder.response.direction import Direction
-from common.decoder.response.feature import Feature
+from common.services.decoder.response.direction import Direction
+from common.services.decoder.response.feature import Feature
 
 
 @dataclass(frozen=True, slots=True)

@@ -1,7 +1,7 @@
 from tvmbase.models.tvm.account import Account
 
 from common.constants import NEVER_EXISTS_ACCOUNT_NAME
-from common.detector.response.detected import Detected
+from common.services.detector.response.detected import Detected
 
 
 def detect_special(account: Account) -> Detected:

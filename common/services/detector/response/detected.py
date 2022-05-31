@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from tonclient.types import AbiContract
 
 from common.constants import UNKNOWN_ACCOUNT_NAME
-from common.detector.response.feature import Feature
+from common.services.detector.response.feature import Feature
 
 
 @dataclass(frozen=True, slots=True)

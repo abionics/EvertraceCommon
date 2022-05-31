@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from tvmbase.client import Client
 from tvmbase.models.tvm.message import Message
 
-from common.decoder.response.direction import Direction
+from common.services.decoder.response.direction import Direction
 
 
 class DecodeBaseParam(ABC, BaseModel):

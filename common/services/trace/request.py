@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from common.loader.request.request import ExtractorClass
+from common.services.loader.request.request import ExtractorClass
 
 
 class TraceServerParam(BaseModel):
