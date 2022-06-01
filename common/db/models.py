@@ -37,7 +37,7 @@ class Contract(Base):
     class_type = Column(String)
     abi_id = Column(Integer, ForeignKey('abi.id'), nullable=True)
     group_id = Column(Integer, ForeignKey('contract_group.id'), nullable=False)
-    abi = relationship('Abi')
+    abi = relationship('Abi', lazy='joined')
 
 
 class BruteforceName(Base):
