@@ -43,6 +43,7 @@ setup(
     install_requires=[
         'tvmbase>=2.3.0',
         'loguru>=0.6.0',
+        'aiohttp>=3.8.1',
         'sqlalchemy>=1.4.36',
         'psycopg2-binary>=2.9.3',
         'fastapi>=0.78.0',
