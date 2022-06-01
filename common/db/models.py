@@ -32,12 +32,18 @@ class Contract(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, index=True, unique=True)
     hash = Column(String, index=True)
-    address = Column(String(66), index=True)
+    address = Column(String(69), index=True)  # 64(value) + 1(:) + 1(-) + 3(wid)
     class_name = Column(String)
     class_type = Column(String)
     abi_id = Column(Integer, ForeignKey('abi.id'), nullable=True)
     group_id = Column(Integer, ForeignKey('contract_group.id'), nullable=False)
     abi = relationship('Abi')
+
+
+class BruteforceName(Base):
+    __tablename__ = 'bruteforce_name'
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False, index=True, unique=True)
 
 
 class Service(Base):
