@@ -41,7 +41,7 @@ setup(
     ],
     packages=find_packages(exclude=['tests', 'examples']),
     install_requires=[
-        'tvmbase>=2.2.3',
+        'tvmbase>=2.3.0',
         'loguru>=0.6.0',
         'sqlalchemy>=1.4.36',
         'psycopg2-binary>=2.9.3',

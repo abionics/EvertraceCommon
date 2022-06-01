@@ -1,4 +1,5 @@
-tvmbase==2.2.3
+# Dont forget to change `install_requires` in "setup.py"
+tvmbase==2.3.0
 loguru==0.6.0
 aiohttp==3.8.1
 sqlalchemy==1.4.36
