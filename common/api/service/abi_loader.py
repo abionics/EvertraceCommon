@@ -6,10 +6,10 @@ from common.types import AbiDictRaw, AbiDict
 from common.utils.fetch import fetch
 
 
-class AbiStorage:
+class AbiLoader:
 
-    def __init__(self, url: str, ignore_not_found: bool = False):
-        self.url = url
+    def __init__(self, api_url: str, ignore_not_found: bool = False):
+        self.api_url = api_url
         self.ignore_not_found = ignore_not_found
 
     async def load_abis(self, hashes: list[str]) -> AbiDict:
@@ -18,5 +18,5 @@ class AbiStorage:
         return convert_abis(abi_raw)
 
     async def _load_query(self, param: LoadParam) -> AbiDictRaw:
-        url = urljoin(self.url, 'load')
+        url = urljoin(self.api_url, 'load')
         return await fetch(url, data={'param': param})

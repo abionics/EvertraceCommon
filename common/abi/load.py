@@ -1,7 +1,7 @@
-from common.api.service.abi_storage import AbiStorage
+from common.api.service.abi_loader import AbiLoader
 from common.types import AbiDict
 
 
-async def load_abis(url: str, hashes: list[str]) -> AbiDict:
-    abi_storage = AbiStorage(url)
-    return await abi_storage.load_abis(hashes)
+async def load_abis(api_url: str, hashes: list[str]) -> AbiDict:
+    abi_loader = AbiLoader(api_url)
+    return await abi_loader.load_abis(hashes)
