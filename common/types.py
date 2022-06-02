@@ -1,6 +1,5 @@
-from typing import Iterable
-
 from tonclient.types import AbiContract
 
-AbiListRaw = Iterable[tuple[str, dict]]
+AbiListRaw = list[tuple[str, dict]]
 AbiList = list[tuple[str, AbiContract]]
+AbiHashes = list[tuple[str, str]]  # name, hash

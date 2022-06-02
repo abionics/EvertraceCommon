@@ -15,10 +15,10 @@ class AbiLoader:
     async def load_abis(self, hashes: list[str]) -> AbiList:
         if len(hashes) == 0:
             return list()
-        param = LoadParam(hashes=hashes, ignore_not_found=self.ignore_not_found)
-        abi_raw = await self._load_query(param)
+        abi_raw = await self._load_query(hashes)
         return convert_abis(abi_raw)
 
-    async def _load_query(self, param: LoadParam) -> AbiListRaw:
+    async def _load_query(self, hashes: list[str]) -> AbiListRaw:
+        param = LoadParam(hashes=hashes, ignore_not_found=self.ignore_not_found)
         url = urljoin(self.api_url, 'load')
         return await fetch(url, data={'param': param})
