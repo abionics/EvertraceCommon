@@ -13,6 +13,8 @@ class AbiLoader:
         self.ignore_not_found = ignore_not_found
 
     async def load_abis(self, hashes: list[str]) -> AbiDict:
+        if len(hashes) == 0:
+            return dict()
         param = LoadParam(hashes=hashes, ignore_not_found=self.ignore_not_found)
         abi_raw = await self._load_query(param)
         return convert_abis(abi_raw)
