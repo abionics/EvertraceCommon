@@ -1,5 +1,7 @@
 IDENTIFIER_PREFIX = 'evertrace'
 
+USER_UNCHECKED_ABI_GROUP_NAME = '<user/unchecked>'
+
 # decoder
 UNKNOWN_FUNCTION_NAME = '<unknown>'
 RECEIVE_FUNCTION_NAME = '<receive>'
