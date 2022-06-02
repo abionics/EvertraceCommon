@@ -2,7 +2,7 @@ from urllib.parse import urljoin
 
 from common.abi.covert import convert_abis
 from common.services.abi_storage.request import LoadParam
-from common.types import AbiDictRaw, AbiDict
+from common.types import AbiListRaw, AbiList
 from common.utils.fetch import fetch
 
 
@@ -12,13 +12,13 @@ class AbiLoader:
         self.api_url = api_url
         self.ignore_not_found = ignore_not_found
 
-    async def load_abis(self, hashes: list[str]) -> AbiDict:
+    async def load_abis(self, hashes: list[str]) -> AbiList:
         if len(hashes) == 0:
-            return dict()
+            return list()
         param = LoadParam(hashes=hashes, ignore_not_found=self.ignore_not_found)
         abi_raw = await self._load_query(param)
         return convert_abis(abi_raw)
 
-    async def _load_query(self, param: LoadParam) -> AbiDictRaw:
+    async def _load_query(self, param: LoadParam) -> AbiListRaw:
         url = urljoin(self.api_url, 'load')
         return await fetch(url, data={'param': param})
