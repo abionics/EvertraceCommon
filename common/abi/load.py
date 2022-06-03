@@ -3,7 +3,9 @@ from common.types import AbiList, AbiHashes
 
 
 async def load_abis(api_url: str, abi_hashes: AbiHashes) -> AbiList:
-    abi_loader = AbiLoader(api_url)
+    if len(abi_hashes) == 0:
+        return list()
+    abi_loader = AbiLoader(api_url, ignore_not_found=False)
     names, hashes = zip(*abi_hashes)
     abi_list = await abi_loader.load_abis(hashes)
     return [

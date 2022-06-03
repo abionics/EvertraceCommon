@@ -21,4 +21,4 @@ class AbiLoader:
     async def _load_query(self, hashes: list[str]) -> AbiListRaw:
         param = LoadParam(hashes=hashes, ignore_not_found=self.ignore_not_found)
         url = urljoin(self.api_url, 'load')
-        return await fetch(url, data={'param': param})
+        return await fetch(url, data={'param': param.dict()})

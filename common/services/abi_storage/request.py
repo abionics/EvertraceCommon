@@ -8,7 +8,7 @@ class UploadParam(BaseModel):
 
 
 class CheckParam(BaseModel):
-    hash: str
+    hashes: list[str]
 
 
 class LoadParam(BaseModel):
