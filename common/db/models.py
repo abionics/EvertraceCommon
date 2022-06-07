@@ -30,7 +30,7 @@ class ContractGroup(Base):
 class Contract(Base):
     __tablename__ = 'contract'
     id = Column(Integer, primary_key=True)
-    name = Column(String, index=True, unique=True)
+    name = Column(String, index=True)
     hash = Column(String, index=True)
     address = Column(String(69), index=True)  # 64(value) + 1(:) + 1(-) + 3(wid)
     class_name = Column(String)

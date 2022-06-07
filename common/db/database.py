@@ -40,5 +40,6 @@ class Database:
             self.session.rollback()
             return False
         except Exception as e:
+            logger.error(f'Database exception {e}')
             self.session.rollback()
             raise e
