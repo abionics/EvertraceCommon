@@ -13,7 +13,7 @@ class Database:
     def __init__(self, url: str):
         self.engine = create_engine(url)
         Base.metadata.create_all(self.engine)
-        self.session = Session(bind=self.engine)
+        self.session = Session(bind=self.engine, echo=True)
 
     def init_service(self, name: str) -> int:
         service = self.get_or_create(Service, name=name)
@@ -27,9 +27,11 @@ class Database:
             logger.success(f'Created {class_type.__name__} with data {kwargs}')
         return instance
 
-    def save(self, instance: Base) -> bool:
+    def save(self, instance: Base, commit: bool = True) -> bool:
         self.session.add(instance)
-        return self.commit()
+        if commit:
+            return self.commit()
+        return True
 
     def commit(self) -> bool:
         try:
@@ -43,3 +45,8 @@ class Database:
             logger.error(f'Database exception {e}')
             self.session.rollback()
             raise e
+
+    def __del__(self):
+        print('close connection')
+        self.session.close()
+        self.engine.dispose()
