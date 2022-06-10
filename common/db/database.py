@@ -9,11 +9,18 @@ from common.db.models import Base, Service
 
 
 class Database:
+    ENGINES = dict()
 
     def __init__(self, url: str):
-        self.engine = create_engine(url)
-        Base.metadata.create_all(self.engine)
-        self.session = Session(bind=self.engine, echo=True)
+        if url not in self.ENGINES:
+            self._create_engine(url)
+        self.engine = self.ENGINES[url]
+        self.session = Session(bind=self.engine)
+
+    def _create_engine(self, url: str):
+        engine = create_engine(url)
+        Base.metadata.create_all(engine)
+        self.ENGINES[url] = engine
 
     def init_service(self, name: str) -> int:
         service = self.get_or_create(Service, name=name)
@@ -47,6 +54,6 @@ class Database:
             raise e
 
     def __del__(self):
-        print('close connection')
-        self.session.close()
-        self.engine.dispose()
+        if self.session is not None:
+            self.session.close()
+            del self.session

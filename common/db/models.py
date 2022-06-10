@@ -39,6 +39,11 @@ class Contract(Base):
     group_id = Column(Integer, ForeignKey('contract_group.id'), nullable=False)
     abi = relationship('Abi', lazy='joined')
 
+    def abi_content(self) -> dict | None:
+        if self.abi is None:
+            return None
+        return self.abi.content
+
 
 class BruteforceName(Base):
     __tablename__ = 'bruteforce_name'
