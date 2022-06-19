@@ -41,7 +41,7 @@ setup(
     ],
     packages=find_packages(exclude=['tests', 'examples']),
     install_requires=[
-        'tvmbase>=2.3.1',
+        'tvmbase>=2.3.4',
         'loguru>=0.6.0',
         'aiohttp>=3.8.1',
         'sqlalchemy>=1.4.36',
