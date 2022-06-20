@@ -10,4 +10,5 @@ BOUNCED_FUNCTION_NAME = '<bounced>'
 # detector
 UNKNOWN_ACCOUNT_NAME = '<unknown>'
 EXTERNAL_ACCOUNT_NAME = '<external>'
+DELETED_ACCOUNT_NAME = '<Deleted>'
 NEVER_EXISTED_ACCOUNT_NAME = '<NeverExisted>'
