@@ -41,13 +41,13 @@ setup(
     ],
     packages=find_packages(exclude=['tests', 'examples']),
     install_requires=[
-        'tvmbase>=2.4.0',
+        'tvmbase>=3.0.1',
         'loguru>=0.6.0',
-        'aiohttp>=3.8.1',
-        'sqlalchemy>=1.4.36',
+        'aiohttp>=3.8.3',
+        'sqlalchemy>=1.4.41',
         'psycopg2-binary>=2.9.3',
-        'fastapi>=0.78.0',
-        'pydantic>=1.9.1',
+        'fastapi>=0.85.0',
+        'pydantic>=1.10.2',
     ],
     zip_safe=False,
 )

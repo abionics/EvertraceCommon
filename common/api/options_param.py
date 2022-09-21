@@ -11,6 +11,6 @@ class OptionsParam(BaseModel):
     def generate(cls, identifier: str) -> 'OptionsParam':
         return cls(identifier=identifier, net=None)
 
-    def create_client(self) -> Client:
-        network = Network.from_name(self.net)
+    def create_client(self, evercloud_key: str = None) -> Client:
+        network = Network.from_name(self.net, evercloud_key)
         return Client(network)

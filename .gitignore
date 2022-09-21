@@ -2,3 +2,8 @@
 **/.DS_Store
 **/__pycache__/
 venv/
+
+# build for pypi
+build/
+dist/
+**.egg-info/
